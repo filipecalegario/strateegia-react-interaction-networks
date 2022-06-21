@@ -6,7 +6,7 @@ import {
   Text,
   UnorderedList,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as api from "strateegia-api";
 import Loading from "../components/Loading";
 import MapList from "../components/MapList";
@@ -74,61 +74,68 @@ export default function Main() {
   console.log(selectedProject + " , " + firstMap);
 
   return (
-    <Box padding={10}>
-      <Box display="flex">
-        <ProjectList handleSelectChange={handleSelectChange} />
-        <Link
-          href={`https://app.strateegia.digital/journey/${selectedProject}/map/${firstMap}`}
-          target="_blank"
-          bg="#E9ECEF"
-          borderRadius={" 0 6px 6px 0 "}
-          fontSize={16}
-          w={200}
-          h="40px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          link para a jornada
-        </Link>
-      </Box>
-      <MapList
-        projectId={selectedProject}
-        handleSelectChange={handleMapSelectChange}
-      />
-      <DivPointList
-        mapId={selectedMap}
-        handleSelectChange={handleDivPointSelectChange}
-      />
-      <Loading active={isLoading} />
-      <Heading as="h3" size="md" mb={3} mt={3}>
-        [applet title here]
-      </Heading>
-      {/* [TODO] Add you component here */}
-      {mapDetails?.points ? (
-        <Box mt={3}>
-          <Heading as="h3" size="md" mb={3}>
-            Map Details
-          </Heading>
-          <Text>Title: {mapDetails?.title}</Text>
-          <Text>ID: {mapDetails?.id}</Text>
-          <Text>Created at: {mapDetails?.created_at}</Text>
-          <Text>Points: {mapDetails?.points?.length}</Text>
-          <UnorderedList>
-            {mapDetails?.points?.map((point) => (
-              <ListItem>
-                {point.point_type}:{" "}
-                {point.point_type === "CONVERSATION"
-                  ? point.description
-                  : point.title}
-              </ListItem>
-            ))}
-          </UnorderedList>
+    <React.Fragment>
+      <Box padding={10}>
+        <Box display="flex">
+          <ProjectList handleSelectChange={handleSelectChange} />
+          <Link
+            href={`https://app.strateegia.digital/journey/${selectedProject}/map/${firstMap}`}
+            target="_blank"
+            bg="#E9ECEF"
+            borderRadius={" 0 6px 6px 0 "}
+            fontSize={16}
+            w={200}
+            h="40px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            link para a jornada
+          </Link>
         </Box>
-      ) : null}
-      {selectedDivPoint !== "" ? (
-        <Text> Selected Divergence Point: {selectedDivPoint}</Text>
-      ) : null}
-    </Box>
+        <MapList
+          projectId={selectedProject}
+          handleSelectChange={handleMapSelectChange}
+        />
+        <DivPointList
+          mapId={selectedMap}
+          handleSelectChange={handleDivPointSelectChange}
+        />
+        <Loading active={isLoading} />
+        <Heading as="h3" size="md" mb={3} mt={3}>
+          [applet title here]
+        </Heading>
+        {/* [TODO] Add you component here */}
+        {mapDetails?.points ? (
+          <Box mt={3}>
+            <Heading as="h3" size="md" mb={3}>
+              Map Details
+            </Heading>
+            <Text>Title: {mapDetails?.title}</Text>
+            <Text>ID: {mapDetails?.id}</Text>
+            <Text>Created at: {mapDetails?.created_at}</Text>
+            <Text>Points: {mapDetails?.points?.length}</Text>
+            <UnorderedList>
+              {mapDetails?.points?.map((point) => (
+                <ListItem>
+                  {point.point_type}:{" "}
+                  {point.point_type === "CONVERSATION"
+                    ? point.description
+                    : point.title}
+                </ListItem>
+              ))}
+            </UnorderedList>
+          </Box>
+        ) : null}
+        {selectedDivPoint !== "" ? (
+          <Text> Selected Divergence Point: {selectedDivPoint}</Text>
+        ) : null}
+      </Box>
+      <Box backgroundColor={"#eeeeee"} minH={600}>
+        <svg width="100%" height="100%">
+          
+        </svg>
+      </Box>
+    </React.Fragment>
   );
 }
